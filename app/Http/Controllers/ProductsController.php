@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Products;
 use App\Category;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ProductExport;
 
@@ -21,6 +25,7 @@ class ProductsController extends Controller
         $data = DB::table('products')->paginate(2);
 
         return view('show')->with('data',$data);
+        // return "Success";
     }
 
     /**
@@ -62,10 +67,11 @@ class ProductsController extends Controller
      * @param  \App\Products  $products
      * @return \Illuminate\Http\Response
      */
-    public function show(Products $products,$id)
+    public function show($id)
     {
         $data = Products::find($id);
 
+        return $data;
         return view('read_pro')->with('data',$data);
     }
 
@@ -126,11 +132,34 @@ class ProductsController extends Controller
 
     public function export(Request $request)
     {   
-        if ($request->input('exportexcel') != null )
-        {
             return Excel::download(new ProductExport, 'products.xlsx');
-        }
+    }
 
-        return redirect()->action('PagesController@index');
+
+    public function login(Request $request)
+    {
+        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
+            $user = User::where('email',$request->email)->first();
+            $token = $user->createToken('my_token')->plainTextToken;
+
+            $response = [
+                'user' => $user,
+                'token' => $token
+            ];
+
+            return redirect('/api/products');
+            // return response($response,201);
+        } 
+        else{ 
+            return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
+        } 
+    }
+
+
+    function product()
+    {
+        $a = Products::all();
+
+        return $a;
     }
 }
