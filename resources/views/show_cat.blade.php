@@ -10,7 +10,7 @@
 			<h3> Read Categories </h3>
 		</div>
 		
-		<a href="/category/create" class="btn btn-info float-right">
+		<a href="/api/category/create" class="btn btn-info float-right">
 			<span class="fas fa-plus-circle">
 			</span> 
 			 Create Categories
@@ -33,13 +33,13 @@
 		            	{{$cat->name}}
 		            </td>
 		            <td>
-		                <form action="/category/{{$cat->id}}" method="post">
+		                <form action="/api/category/{{$cat->id}}" method="post">
 	                		@csrf
 	                		@method('DELETE')
-			             	<a href="/category/{{$cat->id}}" class="btn btn-primary left-margin">
+			             	<a href="/api/category/{{$cat->id}}" class="btn btn-primary left-margin">
 			                    <span class="fas fa-list"></span> Read
 			                </a>
-			                <a href="/category/{{$cat->id}}/edit" class="btn btn-info left-margin">
+			                <a href="/api/category/{{$cat->id}}/edit" class="btn btn-info left-margin">
 			                	<span class="fas fa-edit"></span> Edit
 			                </a>
 			               <button class="btn btn-danger" onclick="return confirm('Are You Sure ?')">

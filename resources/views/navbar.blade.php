@@ -18,13 +18,36 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
 
-        <li class="{{Request::is('products') || Request::is('products/create') ? 'active' : ''}}">
-              <a class="nav-link" href="/products">Products</a>
+        <li class="{{Request::is('api/products') || Request::is('products/create') ? 'active' : ''}}">
+              <a class="nav-link" href="/api/products">Products</a>
         </li>
 
-        <li class="{{Request::is('category') || Request::is('category/create') ? 'active' : ''}}">
-            <a class="nav-link" href="/category">Category</a>
+        <li class="{{Request::is('api/category') || Request::is('category/create') ? 'active' : ''}}">
+            <a class="nav-link" href="/api/category">Category</a>
         </li>
+
+         <li class="{{Request::is('login') || Request::is('login') ? 'active' : ''}}">
+           
+           @if(Auth::check())
+              <li>
+                <a href="{{ route('logout')}}" class="nav-link" onclick="event.preventDefault();
+                       document.getElementById('logout-form').submit();">
+                               {{ __('Logout') }}<br>
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                      @csrf
+                  
+                </form>
+              </li>
+           @else
+            <a class="nav-link" href="{{ route('login') }}">Login</a>
+           <li class="{{Request::is('register') || Request::is('register') ? 'active' : ''}}">
+              <a class="nav-link" href="register">Register</a>
+          </li>
+           @endif
+
+        </li>
+
 
         </ul>
     </div>

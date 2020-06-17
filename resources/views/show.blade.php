@@ -8,14 +8,14 @@
 		<div class="page-header">
 			<h3 class="float-left"> Read Products </h3>
 			
-			<a href="/products/create" class="btn btn-info float-right">
+			<a href="/api/products/create" class="btn btn-info float-right">
 					<span class="fas fa-plus-circle"></span> 
 					Create Products
 				</a>
 		<br><br><br><br>
 		</div>
 
-		<form class="input-group mb-2 col-sm-9 float-left" action="/products/search" method="post">
+		<form class="input-group mb-2 col-sm-9 float-left" action="/api/products/search" method="post">
 		@csrf
 			 <input type="text" class="form-control col-3" placeholder="Product Name" aria-label="Product Name" name="search" aria-describedby="basic-addon2">
 			 
@@ -26,18 +26,26 @@
 			 </div>
 		</form>
 
+		<form class="float-right" action="/api/products/export" method="post">
+		@csrf
+			    <button class="btn btn-secondary" name="exportexcel" type="submit">
+			    	<span class="fas fa-file-excel-o"></span>
+			    	  Export Excel
+			    </button>
+		</form>
+{{-- 
 		<div>
 			<a href="/products/export" name="exportexcel" class="btn btn-secondary float-right">
 				<i class="fa fa-file-excel-o"></i>
 				 Export Excel
 			</a>
-		</div>
-		<div>	
+		</div> --}}
+		{{-- <div>	
 			<a href="/products/export" name="exportexcel" class="btn btn-danger ">
 				<i class="fa fa-file-pdf-o"></i>
 				 Export PDF
 			</a>
-		</div>
+		</div> --}}
 		
 		<table class='table table-hover table-bordered'>
 	        <tr>
@@ -62,13 +70,13 @@
 			            	{{$product->category}}
 			            </td>
 			            <td>
-			            	<form action="/products/{{$product->id}}" method="post">
+			            	<form action="/api/products/{{$product->id}}" method="post">
 		                		@csrf
 		                		@method('DELETE')
-				             	<a href="/products/{{$product->id}}" class="btn btn-success left-margin">
+				             	<a href="/api/products/{{$product->id}}" class="btn btn-success left-margin">
 				                    <span class="fas fa-list"></span> Read
 				                </a>
-				                <a href="/products/{{$product->id}}/edit" class="btn btn-info left-margin">
+				                <a href="/api/products/{{$product->id}}/edit" class="btn btn-info left-margin">
 				                	<span class="fas fa-edit"></span> Edit
 				                </a>
 				                <button class="btn btn-danger" onclick="return confirm('Are You Sure ?')">

@@ -9,13 +9,13 @@
 			<h3> Create Category </h3>
 		</div>
 		
-		<a href="/category" class="btn btn-info float-right">
+		<a href="/api/category" class="btn btn-info float-right">
 		<span class="fas fa-eye"></span>
 		   Read Category</a>
 		<br><br>
 
 
-		<form action="/category" method="post" class="form-group">
+		<form action="/api/category" method="post" class="form-group">
 			@csrf
 			<table class="table table-hover table-bordered">
 				<tr>

@@ -9,14 +9,14 @@
 			<h3> Read One Product </h3>
 		</div>
 		
-		<a href="/products" class="btn btn-info float-right">
+		<a href="/api/products" class="btn btn-info float-right">
 		<span class="fas fa-eye"></span>
 		   Read Products</a>
 		<br><br>
 
 			<table class="table table-hover table-bordered">
 				{{-- @foreach($data as $product) --}}
-				<tr>
+				<tr>    
 					<td>
 						Name
 					</td>

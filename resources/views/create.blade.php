@@ -15,7 +15,7 @@
 		<br><br>
 
 
-		<form action="/products" method="post" class="form-group">
+		<form action="/api/products" method="post" class="form-group">
 			@csrf
 			<table class="table table-hover table-bordered">
 				<tr>

@@ -9,12 +9,12 @@
 			<h3> Edit Category </h3>
 		</div>
 		
-		<a href="/category" class="btn btn-info float-right">
+		<a href="/api/category" class="btn btn-info float-right">
 		<span class="fas fa-eye"></span>
 		   Read Category</a>
 		<br><br>
 
-		<form action="/category/{{$data->id}}" method="post" class="form-group">
+		<form action="/api/category/{{$data->id}}" method="post" class="form-group">
 			@method('PUT')
 			@csrf
 			<table class="table table-hover table-bordered">

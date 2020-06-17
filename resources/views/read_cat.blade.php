@@ -9,7 +9,7 @@
 			<h3> Read One Category </h3>
 		</div>
 		
-		<a href="/category" class="btn btn-info float-right">
+		<a href="/api/category" class="btn btn-info float-right">
 		<span class="fas fa-eye"></span>
 		   Read Categories</a>
 		<br><br>

@@ -9,13 +9,13 @@
 			<h3> Edit Products </h3>
 		</div>
 		
-		<a href="/products" class="btn btn-info float-right">
+		<a href="/api/products" class="btn btn-info float-right">
 		<span class="fas fa-eye"></span>
 		   Read Products</a>
 		<br><br>
 
 
-		<form action="/products/{{$data->id}}" method="post" class="form-group">
+		<form action="/api/products/{{$data->id}}" method="post" class="form-group">
 			@csrf
 			@method('PUT')
 			<table class="table table-hover table-bordered">

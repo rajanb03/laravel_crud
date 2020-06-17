@@ -14,11 +14,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('create');
+    return view('welcome');
 });
 
-Route::Resource('products','ProductsController');
-Route::post('/products/search','ProductsController@search');
-Route::get('/products/export','ProductsController@export');
 
-Route::Resource('category','CategoryController');
+	// Route::Resource('products','ProductsController');
+	// Route::post('/products/search','ProductsController@search');
+	// Route::post('/products/export','ProductsController@export');
+
+	// Route::Resource('category','CategoryController');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
