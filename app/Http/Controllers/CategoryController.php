@@ -38,8 +38,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'name' => 'required|unique:category|max:255',
+            'description' => 'required',
+        ]);
+
        $data = Category::create($request->all());
-       return "Success.";
+       
+       return response()->json(['name' => $request->name, 'description' => $request->description]);
     }
 
     /**
@@ -66,7 +72,6 @@ class CategoryController extends Controller
     {
         $data = Category::find($id);
 
-        // return view('edit_cat')->with('data',$data);
         return response()->json($data);
     }
 
@@ -79,12 +84,17 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validatedData = $request->validate([
+            'name' => 'required|unique:category|max:255',
+            'description' => 'required',
+        ]);
+
         Category::where('id',$id)->update([
             'name' => $request->name,
             'description' => $request->description
         ]);
 
-        return "Success.";
+         return response()->json(['name' => $request->name, 'description' => $request->description]);
     }
 
     /**
@@ -96,6 +106,7 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         Category::where('id',$id)->delete();
-        return "Deleted.";
+        
+        return response()->json(['id' => $id]);
     }
 }
