@@ -24,8 +24,8 @@ class ProductsController extends Controller
     {
         $data = DB::table('products')->paginate(2);
 
-        return view('show')->with('data',$data);
-        // return "Success";
+        // return view('show')->with('data',$data);
+        return response()->json($data);
     }
 
     /**
@@ -37,7 +37,8 @@ class ProductsController extends Controller
     {
         $data = Category::select('name')->get();
 
-        return view('create')->with('data',$data);
+        // return view('create')->with('data',$data);
+        return response()->json($data);
     }
 
     /**
@@ -71,8 +72,8 @@ class ProductsController extends Controller
     {
         $data = Products::find($id);
 
-        return $data;
-        return view('read_pro')->with('data',$data);
+        // return view('read_pro')->with('data',$data);
+        return response()->json($data);
     }
 
     /**
@@ -85,7 +86,8 @@ class ProductsController extends Controller
     {
         $data = Products::find($id);
 
-        return view('edit')->with('data',$data);
+        // return view('edit')->with('data',$data);
+        return response()->json($data);
     }
 
     /**
@@ -107,7 +109,7 @@ class ProductsController extends Controller
             'description' => $request->description
         ]);
 
-        return back();
+        return "Success.";
     }
 
     /**
@@ -120,14 +122,15 @@ class ProductsController extends Controller
     {
         Products::where('id',$id)->delete();
 
-        return back();
+        return "Deleted.";
     }
 
     public function search(Request $request)
     {
         $name = $request->search;
         $data = Products::where('name','like','%'.$name.'%')->paginate(2);
-        return view('show')->with('data',$data);
+        // return view('show')->with('data',$data);
+        return response()->json($data);
     }
 
     public function export(Request $request)
@@ -147,19 +150,12 @@ class ProductsController extends Controller
                 'token' => $token
             ];
 
-            return redirect('/api/products');
-            // return response($response,201);
+            // return redirect('/api/products');
+            return response($response,201);
         } 
         else{ 
             return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
         } 
     }
 
-
-    function product()
-    {
-        $a = Products::all();
-
-        return $a;
-    }
 }

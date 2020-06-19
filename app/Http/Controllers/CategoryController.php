@@ -16,7 +16,8 @@ class CategoryController extends Controller
     {
         $data = Category::all();
 
-        return view('show_cat')->with('data',$data);
+        // return view('show_cat')->with('data',$data);
+        return response()->json($data);
     }
 
     /**
@@ -38,6 +39,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
        $data = Category::create($request->all());
+       return "Success.";
     }
 
     /**
@@ -50,7 +52,8 @@ class CategoryController extends Controller
     {
         $data = Category::find($id);
 
-        return view('read_cat')->with('data',$data);
+        // return view('read_cat')->with('data',$data);
+        return response()->json($data);
     }
 
     /**
@@ -63,7 +66,8 @@ class CategoryController extends Controller
     {
         $data = Category::find($id);
 
-        return view('edit_cat')->with('data',$data);
+        // return view('edit_cat')->with('data',$data);
+        return response()->json($data);
     }
 
     /**
@@ -80,7 +84,7 @@ class CategoryController extends Controller
             'description' => $request->description
         ]);
 
-        return back();
+        return "Success.";
     }
 
     /**
@@ -92,6 +96,6 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         Category::where('id',$id)->delete();
-        return back();
+        return "Deleted.";
     }
 }
