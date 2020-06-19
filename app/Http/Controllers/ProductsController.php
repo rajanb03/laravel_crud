@@ -49,6 +49,13 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
+         $validatedData = $request->validate([
+            'name' => 'required|unique:category|max:255',
+            'description' => 'required',
+            'price' => 'required|digits:10',
+            'category' => 'required',
+        ]);
+
         $category_id = Category::select('id')->where('name',$request->category)->first();
 
         Products::insert([
@@ -59,7 +66,13 @@ class ProductsController extends Controller
             'category_id' => $category_id->id
         ]);
 
-        return "Success.";
+        return response()->json(
+            ['name' => $request->name, 
+             'price' => $request->price,
+             'description' => $request->description,
+             'category' => $request->category,
+             'category_id' => $category_id
+            ]);
     }
 
     /**
@@ -99,6 +112,13 @@ class ProductsController extends Controller
      */
     public function update(Request $request,$id)
     {
+        $validatedData = $request->validate([
+            'name' => 'required|unique:category|max:255',
+            'description' => 'required',
+            'price' => 'required|digits:10',
+            'category' => 'required',
+        ]);
+
         $category_id = Category::select('id')->where('name',$request->category)->first();
 
         Products::where('id',$id)->update([
@@ -109,7 +129,13 @@ class ProductsController extends Controller
             'description' => $request->description
         ]);
 
-        return "Success.";
+        return response()->json(
+            ['name' => $request->name, 
+             'price' => $request->price,
+             'description' => $request->description,
+             'category' => $request->category,
+             'category_id' => $category_id
+            ]);
     }
 
     /**
@@ -122,14 +148,13 @@ class ProductsController extends Controller
     {
         Products::where('id',$id)->delete();
 
-        return "Deleted.";
+        return response()->json(['id' => $id]);
     }
 
     public function search(Request $request)
     {
         $name = $request->search;
         $data = Products::where('name','like','%'.$name.'%')->paginate(2);
-        // return view('show')->with('data',$data);
         return response()->json($data);
     }
 
