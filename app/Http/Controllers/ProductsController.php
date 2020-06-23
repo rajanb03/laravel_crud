@@ -13,14 +13,16 @@ use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ProductExport;
 
-class ProductsController extends Controller {
+class ProductsController extends Controller 
+{
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
 
-    public function index() {
+    public function index() 
+    {
         $data = DB::table('products')->paginate(2);
 
         // return view('show')->with('data',$data);
@@ -33,7 +35,8 @@ class ProductsController extends Controller {
      * @return \Illuminate\Http\Response
      */
 
-    public function create() {
+    public function create() 
+    {
         $data = Category::select('name')->get();
 
         // return view('create')->with('data',$data);
@@ -47,7 +50,8 @@ class ProductsController extends Controller {
      * @return \Illuminate\Http\Response
      */
 
-    public function store(Request $request) {
+    public function store(Request $request) 
+    {
         $validatedData = $request->validate ([
                 'name' => 'required|unique:category|max:255',
                 'description' => 'required',
@@ -81,7 +85,8 @@ class ProductsController extends Controller {
      * @return \Illuminate\Http\Response
      */
 
-    public function show($id) {
+    public function show($id) 
+    {
         $data = Products::find($id);
 
         // return view('read_pro')->with('data',$data);
@@ -95,7 +100,8 @@ class ProductsController extends Controller {
      * @return \Illuminate\Http\Response
      */
 
-    public function edit($id) {
+    public function edit($id) 
+    {
         $data = Products::find($id);
         // return view('edit')->with('data',$data);
         return response()->json($data);
@@ -109,7 +115,8 @@ class ProductsController extends Controller {
      * @return \Illuminate\Http\Response
      */
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id) 
+    {
         $validatedData = $request->validate ([
                 'name' => 'required|unique:category|max:255',
                 'description' => 'required',
@@ -143,24 +150,28 @@ class ProductsController extends Controller {
      * @return \Illuminate\Http\Response
      */
 
-    public function destroy($id) {
+    public function destroy($id) 
+    {
         Products::where('id', $id)->delete();
  
         return response()->json(['id' => $id]);
     }
 
-    public function search(Request $request) {
+    public function search(Request $request) 
+    {
         $name = $request->search;
         $data = Products::where('name', 'like', '%'.$name.'%')->paginate(2);
         return response()->json($data);
     }
 
-    public function export(Request $request) {   
+    public function export(Request $request) 
+    {   
             return Excel::download(new ProductExport, 'products.xlsx');
     }
 
 
-    public function login(Request $request) {
+    public function login(Request $request) 
+    {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) { 
             $user = User::where('email', $request->email)->first();
             $token = $user->createToken('my_token')->plainTextToken;
