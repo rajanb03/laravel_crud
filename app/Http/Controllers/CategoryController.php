@@ -16,8 +16,6 @@ class CategoryController extends Controller
     public function index() 
     {
         $data = Category::all();
-
-        // return view('show_cat')->with('data',$data);
         return response()->json($data);
     }
 
@@ -61,8 +59,6 @@ class CategoryController extends Controller
     public function show($id) 
     {
         $data = Category::find($id);
-
-        // return view('read_cat')->with('data',$data);
         return response()->json($data);
     }
 
@@ -76,7 +72,6 @@ class CategoryController extends Controller
     public function edit($id) 
     {
         $data = Category::find($id);
-
         return response()->json($data);
     }
 
@@ -113,7 +108,6 @@ class CategoryController extends Controller
     public function destroy($id) 
     {
         Category::where('id', $id)->delete();
-        
         return response()->json(['id' => $id]);
     }
 }
