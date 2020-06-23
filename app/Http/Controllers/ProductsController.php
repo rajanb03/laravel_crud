@@ -24,8 +24,6 @@ class ProductsController extends Controller
     public function index() 
     {
         $data = DB::table('products')->paginate(2);
-
-        // return view('show')->with('data',$data);
         return response()->json($data);
     }
 
@@ -38,8 +36,6 @@ class ProductsController extends Controller
     public function create() 
     {
         $data = Category::select('name')->get();
-
-        // return view('create')->with('data',$data);
         return response()->json($data);
     }
 
@@ -88,8 +84,6 @@ class ProductsController extends Controller
     public function show($id) 
     {
         $data = Products::find($id);
-
-        // return view('read_pro')->with('data',$data);
         return response()->json($data);
     }
 
@@ -103,7 +97,6 @@ class ProductsController extends Controller
     public function edit($id) 
     {
         $data = Products::find($id);
-        // return view('edit')->with('data',$data);
         return response()->json($data);
     }
 
@@ -181,7 +174,6 @@ class ProductsController extends Controller
                 'token' => $token
             ];
 
-            // return redirect('/api/products');
             return response($response,201);
         } 
         else { 
