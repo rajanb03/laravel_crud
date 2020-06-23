@@ -13,40 +13,42 @@ use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ProductExport;
 
-class ProductsController extends Controller 
-{
+class ProductsController extends Controller {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+
+    public function index() {
         $data = DB::table('products')->paginate(2);
+
         // return view('show')->with('data',$data);
         return response()->json($data);
     }
+
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+
+    public function create() {
         $data = Category::select('name')->get();
+
         // return view('create')->with('data',$data);
         return response()->json($data);
     }
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $request->validate
-        ([
+
+    public function store(Request $request) {
+        $validatedData = $request->validate ([
                 'name' => 'required|unique:category|max:255',
                 'description' => 'required',
                 'price' => 'required|digits:10',
@@ -55,8 +57,7 @@ class ProductsController extends Controller
 
         $category_id = Category::select('id')->where('name', $request->category)->first();
 
-        Products::insert
-        ([
+        Products::insert ([
             'name' => $request->name,
             'price' => $request->price,
             'description' => $request->description,
@@ -64,8 +65,7 @@ class ProductsController extends Controller
             'category_id' => $category_id->id
         ]);
 
-        return response()->json
-        ([
+        return response()->json ([
              'name' => $request->name, 
              'price' => $request->price,
              'description' => $request->description,
@@ -73,38 +73,44 @@ class ProductsController extends Controller
              'category_id' => $category_id
         ]);
     }
+
     /**
      * Display the specified resource.
      *
+     * @param  \App\Products  $products
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+
+    public function show($id) {
         $data = Products::find($id);
+
         // return view('read_pro')->with('data',$data);
         return response()->json($data);
     }
+
     /**
      * Show the form for editing the specified resource.
      *
+     * @param  \App\Products  $products
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+
+    public function edit($id) {
         $data = Products::find($id);
         // return view('edit')->with('data',$data);
         return response()->json($data);
     }
+
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Products  $products
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        $request->validate
-        ([
+
+    public function update(Request $request, $id) {
+        $validatedData = $request->validate ([
                 'name' => 'required|unique:category|max:255',
                 'description' => 'required',
                 'price' => 'required|digits:10',
@@ -129,31 +135,32 @@ class ProductsController extends Controller
              'category_id' => $category_id
         ]);
     }
+
     /**
      * Remove the specified resource from storage.
      *
+     * @param  \App\Products  $products
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+
+    public function destroy($id) {
         Products::where('id', $id)->delete();
+ 
         return response()->json(['id' => $id]);
     }
 
-    public function search(Request $request) 
-    {
+    public function search(Request $request) {
         $name = $request->search;
         $data = Products::where('name', 'like', '%'.$name.'%')->paginate(2);
         return response()->json($data);
     }
 
-    public function export(Request $request) 
-    {   
+    public function export(Request $request) {   
             return Excel::download(new ProductExport, 'products.xlsx');
     }
 
-    public function login(Request $request)
-    {
+
+    public function login(Request $request) {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) { 
             $user = User::where('email', $request->email)->first();
             $token = $user->createToken('my_token')->plainTextToken;
