@@ -17,7 +17,6 @@ class ProductsController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
      * @return \Illuminate\Http\Response
      */
 
@@ -29,7 +28,6 @@ class ProductsController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
      * @return \Illuminate\Http\Response
      */
 
@@ -41,7 +39,6 @@ class ProductsController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -76,8 +73,7 @@ class ProductsController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  \App\Products  $products
+     * @param  Integer $id
      * @return \Illuminate\Http\Response
      */
 
@@ -89,8 +85,7 @@ class ProductsController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \App\Products  $products
+     * @param  Integer $id
      * @return \Illuminate\Http\Response
      */
 
@@ -102,9 +97,8 @@ class ProductsController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Products  $products
+     * @param  Integer $id
      * @return \Illuminate\Http\Response
      */
 
@@ -138,15 +132,13 @@ class ProductsController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\Products  $products
+     * @param  Integer $id
      * @return \Illuminate\Http\Response
      */
 
     public function destroy($id) 
     {
         Products::where('id', $id)->delete();
- 
         return response()->json(['id' => $id]);
     }
 
@@ -159,7 +151,7 @@ class ProductsController extends Controller
 
     public function export(Request $request) 
     {   
-            return Excel::download(new ProductExport, 'products.xlsx');
+        return Excel::download(new ProductExport, 'products.xlsx');
     }
 
 
