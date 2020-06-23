@@ -17,32 +17,36 @@ class ProductsController extends Controller
 {
     /**
      * Display a listing of the resource.
+     *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
         $data = DB::table('products')->paginate(2);
+        // return view('show')->with('data',$data);
         return response()->json($data);
     }
-
     /**
      * Show the form for creating a new resource.
+     *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
         $data = Category::select('name')->get();
+        // return view('create')->with('data',$data);
         return response()->json($data);
     }
-
     /**
      * Store a newly created resource in storage.
+     *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $request->validate ([
+        $request->validate
+        ([
                 'name' => 'required|unique:category|max:255',
                 'description' => 'required',
                 'price' => 'required|digits:10',
@@ -51,7 +55,8 @@ class ProductsController extends Controller
 
         $category_id = Category::select('id')->where('name', $request->category)->first();
 
-        Products::insert ([
+        Products::insert
+        ([
             'name' => $request->name,
             'price' => $request->price,
             'description' => $request->description,
@@ -59,7 +64,8 @@ class ProductsController extends Controller
             'category_id' => $category_id->id
         ]);
 
-        return response()->json ([
+        return response()->json
+        ([
              'name' => $request->name, 
              'price' => $request->price,
              'description' => $request->description,
@@ -67,38 +73,38 @@ class ProductsController extends Controller
              'category_id' => $category_id
         ]);
     }
-
     /**
      * Display the specified resource.
-     * @param Integer $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         $data = Products::find($id);
+        // return view('read_pro')->with('data',$data);
         return response()->json($data);
     }
-
     /**
      * Show the form for editing the specified resource.
-     * @param Integer $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $data = Products::find($id);
+        // return view('edit')->with('data',$data);
         return response()->json($data);
     }
-
     /**
      * Update the specified resource in storage.
-     * @param Integer $id
+     *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $request->validate ([
+        $request->validate
+        ([
                 'name' => 'required|unique:category|max:255',
                 'description' => 'required',
                 'price' => 'required|digits:10',
@@ -123,10 +129,9 @@ class ProductsController extends Controller
              'category_id' => $category_id
         ]);
     }
-
     /**
      * Remove the specified resource from storage.
-     * @param Integer $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -149,8 +154,7 @@ class ProductsController extends Controller
 
     public function login(Request $request)
     {
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password]))
-        { 
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) { 
             $user = User::where('email', $request->email)->first();
             $token = $user->createToken('my_token')->plainTextToken;
 
@@ -159,10 +163,10 @@ class ProductsController extends Controller
                 'token' => $token
             ];
 
+            // return redirect('/api/products');
             return response($response,201);
         } 
-        else
-        { 
+        else { 
             return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
         } 
     }
