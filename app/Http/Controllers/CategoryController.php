@@ -5,14 +5,16 @@ namespace App\Http\Controllers;
 use App\Category;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller {
+class CategoryController extends Controller 
+{
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
 
-    public function index() {
+    public function index() 
+    {
         $data = Category::all();
 
         // return view('show_cat')->with('data',$data);
@@ -25,7 +27,8 @@ class CategoryController extends Controller {
      * @return \Illuminate\Http\Response
      */
 
-    public function create() {
+    public function create() 
+    {
         return view('create_cat');
     }
 
@@ -36,7 +39,8 @@ class CategoryController extends Controller {
      * @return \Illuminate\Http\Response
      */
     
-    public function store(Request $request) {
+    public function store(Request $request) 
+    {
         $validatedData = $request->validate ([
             'name' => 'required|unique:category|max:255',
             'description' => 'required',
@@ -54,7 +58,8 @@ class CategoryController extends Controller {
      * @return \Illuminate\Http\Response
      */
 
-    public function show($id) {
+    public function show($id) 
+    {
         $data = Category::find($id);
 
         // return view('read_cat')->with('data',$data);
@@ -68,7 +73,8 @@ class CategoryController extends Controller {
      * @return \Illuminate\Http\Response
      */
 
-    public function edit($id) {
+    public function edit($id) 
+    {
         $data = Category::find($id);
 
         return response()->json($data);
@@ -82,7 +88,8 @@ class CategoryController extends Controller {
      * @return \Illuminate\Http\Response
      */
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id) 
+    {
         $validatedData = $request->validate ([
             'name' => 'required|unique:category|max:255',
             'description' => 'required',
@@ -103,7 +110,8 @@ class CategoryController extends Controller {
      * @return \Illuminate\Http\Response
      */
 
-    public function destroy($id) {
+    public function destroy($id) 
+    {
         Category::where('id', $id)->delete();
         
         return response()->json(['id' => $id]);
