@@ -17,20 +17,18 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-	
 
-Route::middleware(['auth:sanctum'])->group(function(){
-	
+Route::middleware(['auth:sanctum'])->group(function()
+{
 	Route::Resource('products',"ProductsController");
 	Route::Resource('category','CategoryController');
-
-	
 	Route::post('/products/search','ProductsController@search');
 	Route::post('/products/export','ProductsController@export');
-
+	Route::get('/details','UserController@details');
 });
 
-	Route::post('/login','ProductsController@login');
-// Route::post('loginUser',"ProductsController@login");
+Route::get('email/verify/{id}', 'VerificationApiController@verify')->name('verificationapi.verify');
+Route::get('email/resend', 'VerificationApiController@resend')->name('verificationapi.resend');
 
-// Route::get('product',"ProductsController@product");
+Route::post('/register','UserController@register');
+Route::post('/login','UserController@login');
