@@ -19,7 +19,6 @@ class ProductsController extends Controller
      * Display a listing of the resource.
      * @return \Illuminate\Http\Response
      */
-
     public function index() 
     {
         $data = DB::table('products')->paginate(2);
@@ -30,7 +29,6 @@ class ProductsController extends Controller
      * Show the form for creating a new resource.
      * @return \Illuminate\Http\Response
      */
-
     public function create() 
     {
         $data = Category::select('name')->get();
@@ -42,7 +40,6 @@ class ProductsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-
     public function store(Request $request) 
     {
         $validatedData = $request->validate ([
@@ -76,7 +73,6 @@ class ProductsController extends Controller
      * @param  Integer $id
      * @return \Illuminate\Http\Response
      */
-
     public function show($id) 
     {
         $data = Products::find($id);
@@ -88,7 +84,6 @@ class ProductsController extends Controller
      * @param  Integer $id
      * @return \Illuminate\Http\Response
      */
-
     public function edit($id) 
     {
         $data = Products::find($id);
@@ -101,7 +96,6 @@ class ProductsController extends Controller
      * @param  Integer $id
      * @return \Illuminate\Http\Response
      */
-
     public function update(Request $request, $id) 
     {
         $validatedData = $request->validate ([
@@ -135,7 +129,6 @@ class ProductsController extends Controller
      * @param  Integer $id
      * @return \Illuminate\Http\Response
      */
-
     public function destroy($id) 
     {
         Products::where('id', $id)->delete();
