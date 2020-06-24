@@ -24,6 +24,7 @@ Route::middleware(['auth:sanctum'])->group(function()
 	Route::Resource('category','CategoryController');
 	Route::post('/products/search','ProductsController@search');
 	Route::post('/products/export','ProductsController@export');
+	Route::post('/category/export','CategoryController@export');
 	Route::get('/details','UserController@details');
 });
 
