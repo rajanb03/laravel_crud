@@ -154,23 +154,4 @@ class ProductsController extends Controller
         return Excel::download(new ProductExport, 'products.xlsx');
     }
 
-
-    public function login(Request $request) 
-    {
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) { 
-            $user = User::where('email', $request->email)->first();
-            $token = $user->createToken('my_token')->plainTextToken;
-
-            $response = [
-                'user' => $user,
-                'token' => $token
-            ];
-
-            return response($response,201);
-        } 
-        else { 
-            return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
-        } 
-    }
-
 }
