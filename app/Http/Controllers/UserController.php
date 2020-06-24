@@ -21,7 +21,6 @@ class UserController extends Controller
      * login api 
      * @return \Illuminate\Http\Response 
      */
-
     public function login(Request $request) 
     {
         if(Auth::attempt(['email' => request('email'), 'password' => request('password')]))
@@ -57,7 +56,6 @@ class UserController extends Controller
      * Register api 
      * @return \Illuminate\Http\Response 
      */ 
-
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -86,7 +84,6 @@ class UserController extends Controller
      * details api 
      * @return \Illuminate\Http\Response 
      */ 
-
     public function details() 
     { 
         $user = Auth::user(); 
