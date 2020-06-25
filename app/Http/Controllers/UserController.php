@@ -12,6 +12,7 @@ use App\Mail\RegisteredUser;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Auth\Events\Verified;
 use App\Mail\SendMail;
+use App\Jobs\WelcomeEmailJob;
 
 class UserController extends Controller
 {
@@ -74,7 +75,7 @@ class UserController extends Controller
         $input['password'] = Hash::make($input['password']);
         $user = User::create($input);
         
-        Mail::to($user->email)->send(new SendMail($user));
+        $this->dispatch(new WelcomeEmailJob($user));
 
         $success['message'] = "Mail Sent to your email,Please Check it.";
         return response()->json(['success' => $success], $this->successStatus);
