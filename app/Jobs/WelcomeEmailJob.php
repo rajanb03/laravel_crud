@@ -11,12 +11,13 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendMail;
 use App\Mail\WelcomeMessage;
+use App\Events\UserRegistered;
 
 class WelcomeEmailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $user;
+    public $user;
     /**
      * Create a new job instance.
      *
@@ -34,7 +35,6 @@ class WelcomeEmailJob implements ShouldQueue
      */
     public function handle()
     {
-        Mail::to($this->user['email'])->send(new WelcomeMessage());
         $email = new SendMail($this->user);
         Mail::to($this->user['email'])->send($email);
     }
